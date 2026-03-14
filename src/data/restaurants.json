@@ -1,0 +1,84 @@
+[
+  {
+    "profile": {
+      "name": "La Bodega del Mar",
+      "description": "Traditional Mediterranean seafood restaurant with a modern twist.",
+      "rating": 4.7,
+      "category": ["Marisc", "Espanyol", "Wine Bar"],
+      "timetable": {
+        "monday": [{ "open": "13:00", "close": "16:00" }, { "open": "20:00", "close": "23:30" }],
+        "tuesday": [{ "open": "13:00", "close": "16:00" }, { "open": "20:00", "close": "23:30" }],
+        "wednesday": [{ "open": "13:00", "close": "16:00" }, { "open": "20:00", "close": "23:30" }],
+        "thursday": [{ "open": "13:00", "close": "16:00" }, { "open": "20:00", "close": "23:30" }],
+        "friday": [{ "open": "13:00", "close": "16:30" }, { "open": "20:00", "close": "00:00" }],
+        "saturday": [{ "open": "13:00", "close": "16:30" }, { "open": "20:00", "close": "00:00" }],
+        "sunday": [{ "open": "13:00", "close": "17:00" }]
+      },
+      "image": [
+        "https://cdn.example.com/restaurants/bodega_main.jpg",
+        "https://cdn.example.com/restaurants/bodega_interior.jpg",
+        "https://cdn.example.com/restaurants/bodega_dish1.jpg"
+      ],
+      "contact": {
+        "phone": "+34 93 456 78 90",
+        "email": "reservas@labodegadelmar.com"
+      },
+      "location": {
+        "city": "Barcelona",
+        "address": "Carrer del Mar, 42, 08003 Barcelona",
+        "googlePlaceId": "ChIJAQCl79yipBIRpMnMEzTB5jA",
+        "coordinates": {
+          "type": "Point",
+          "coordinates": [2.1834, 41.3851]
+        }
+      }
+    },
+    "employees": [
+      "65f1c2a1b2c3d4e5f6789011",
+      "65f1c2a1b2c3d4e5f6789012"
+    ],
+    "rewards": [
+      "65f1c2a1b2c3d4e5f6789021",
+      "65f1c2a1b2c3d4e5f6789022",
+      "65f1c2a1b2c3d4e5f6789023"
+    ],
+    "statistics": "65f1c2a1b2c3d4e5f6789041",
+    "badges": [
+      "65f1c2a1b2c3d4e5f6789031"
+    ],
+    "createdAt": "2023-06-01T08:00:00.000Z",
+    "updatedAt": "2024-06-15T10:00:00.000Z"
+  },
+  {
+    "profile": {
+      "name": "Tokyo Ramen House",
+      "description": "Authentic Japanese ramen, crafted with 20-hour broth.",
+      "rating": 4.5,
+      "category": ["Japonès", "Ramen"],
+      "timetable": {
+        "tuesday": [{ "open": "12:00", "close": "15:00" }, { "open": "19:00", "close": "22:30" }],
+        "wednesday": [{ "open": "12:00", "close": "15:00" }, { "open": "19:00", "close": "22:30" }],
+        "thursday": [{ "open": "12:00", "close": "15:00" }, { "open": "19:00", "close": "22:30" }],
+        "friday": [{ "open": "12:00", "close": "15:00" }, { "open": "19:00", "close": "23:00" }],
+        "saturday": [{ "open": "12:00", "close": "23:00" }],
+        "sunday": [{ "open": "12:00", "close": "16:00" }]
+      },
+      "image": ["https://cdn.example.com/restaurants/tokyo_ramen.jpg"],
+      "contact": { "phone": "+34 93 222 33 44" },
+      "location": {
+        "city": "Barcelona",
+        "address": "Carrer de Consell de Cent, 281, 08011 Barcelona",
+        "coordinates": {
+          "type": "Point",
+          "coordinates": [2.1554, 41.3902]
+        }
+      }
+    },
+    "employees": ["65f1c2a1b2c3d4e5f6789013"],
+    "rewards": ["65f1c2a1b2c3d4e5f6789024"],
+    "statistics": "65f1c2a1b2c3d4e5f6789042",
+    "badges": [],
+    "createdAt": "2023-11-15T10:00:00.000Z",
+    "updatedAt": "2024-05-01T14:00:00.000Z"
+  }
+]
