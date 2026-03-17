@@ -5,7 +5,9 @@ export interface ICustomer {
     _id?: Types.ObjectId;
     name: string;
     email: string;
-    password: string;
+    password?: string;
+    refreshTokenHash?: string;
+    isActive: boolean;
     profilePictures?: string[];
     pointsWallet?: Types.ObjectId[];
     visitHistory?: Types.ObjectId[];
@@ -18,7 +20,9 @@ export interface ICustomer {
 const customerSchema = new Schema<ICustomer>({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true, match: /.+\@.+\..+/ },
-    password: { type: String },
+    password: { type: String, select: false },
+    refreshTokenHash: { type: String },
+    isActive: { type: Boolean, default: true },
     profilePictures: [{ type: String }],
     pointsWallet: [{ type: Schema.Types.ObjectId, ref: 'PointsWallet' }],
     visitHistory: [{ type: Schema.Types.ObjectId, ref: 'Visit' }],

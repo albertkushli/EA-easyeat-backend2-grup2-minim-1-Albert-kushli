@@ -5,12 +5,13 @@ export interface IEmployee {
     restaurant_id: Types.ObjectId;
     profile: {
         name: string;
+        password?: string;
         email?: string;
         phone?: string;
-        passwordHash: string;
-        role: string;
+        role?: string;
     };
-    active: boolean;
+    refreshTokenHash?: string;
+    isActive: boolean;
 }
 
 const employeeSchema = new Schema<IEmployee>(
@@ -18,12 +19,13 @@ const employeeSchema = new Schema<IEmployee>(
         restaurant_id: { type: Schema.Types.ObjectId, ref: 'Restaurant', required: true},
         profile: {
             name: { type: String, required: true },
+            password: { type: String, select: false },
             email: { type: String },
             phone: { type: String, trim: true },
-            passwordHash: { type: String, required: true },
-            role: { type: String, enum: ['owner', 'staff'], required: true, default: 'staff' },
+            role: { type: String, enum: ['owner', 'staff'], default: 'staff' },
         },
-        active: { type: Boolean, required: true, default: true},
+        refreshTokenHash: { type: String },
+        isActive: { type: Boolean, required: true, default: true},
     },
     { timestamps: true }
 );

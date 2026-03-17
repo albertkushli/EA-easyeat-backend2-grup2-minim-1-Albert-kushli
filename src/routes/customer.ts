@@ -39,7 +39,7 @@ const router = express.Router();
  *         email:
  *           type: string
  *           example: "nizar@gmail.com"
- *         passwordHash:
+ *         password:
  *           type: string
  *           example: "$2b$10$abcdefghijklmnopqrstuv"
  *         profilePictures:
@@ -96,7 +96,7 @@ const router = express.Router();
  *         email:
  *           type: string
  *           example: "nizar@gmail.com"
- *         passwordHash:
+ *         password:
  *           type: string
  *           example: "$2b$10$abcdefghijklmnopqrstuv"
  *         profilePictures:

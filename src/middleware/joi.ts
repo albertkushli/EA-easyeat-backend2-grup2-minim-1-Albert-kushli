@@ -55,7 +55,7 @@ const categoryEnum = [
 const objectId = Joi.string().length(24).hex();
 
 // Password rules centralitzades — fàcil de modificar en un sol lloc
-const passwordSchema = Joi.string().min(8).max(128).required();
+const passwordSchema = Joi.string().min(8).max(128);
 const passwordUpdateSchema = Joi.string().min(8).max(128); // opcional en update
 
 export const Schemas = {
@@ -110,17 +110,17 @@ export const Schemas = {
                 password: passwordSchema,
                 role: Joi.string().valid('owner', 'staff').default('staff').required()
             }).required(),
-            active: Joi.boolean().default(true)
+            isActive: Joi.boolean().default(true)
         }),
         update: Joi.object<IEmployee>({
             profile: Joi.object({
                 name: Joi.string(),
                 email: Joi.string().email(),
                 phone: Joi.string().trim(),
-                password: passwordUpdateSchema,
+                password: passwordSchema,
                 role: Joi.string().valid('owner', 'staff')
             }),
-            active: Joi.boolean()
+            isActive: Joi.boolean()
         })
     },
 
