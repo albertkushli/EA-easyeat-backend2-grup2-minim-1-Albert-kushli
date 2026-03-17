@@ -6,6 +6,153 @@ const router = express.Router();
 
 /**
  * @openapi
+ * components:
+ *   schemas:
+ *     Restaurant:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *           example: "64a1f2b3c4d5e6f7a8b9c0d1"
+ *         profile:
+ *           type: object
+ *           properties:
+ *             name:
+ *               type: string
+ *             description:
+ *               type: string
+ *             rating:
+ *               type: number
+ *             category:
+ *               type: array
+ *               items:
+ *                 type: string
+ *             timetable:
+ *               type: object
+ *               properties:
+ *                 monday:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       open:
+ *                         type: string
+ *                       close:
+ *                         type: string
+ *                 tuesday:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       open:
+ *                         type: string
+ *                       close:
+ *                         type: string
+ *                 wednesday:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       open:
+ *                         type: string
+ *                       close:
+ *                         type: string
+ *                 thursday:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       open:
+ *                         type: string
+ *                       close:
+ *                         type: string
+ *                 friday:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       open:
+ *                         type: string
+ *                       close:
+ *                         type: string
+ *                 saturday:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       open:
+ *                         type: string
+ *                       close:
+ *                         type: string
+ *                 sunday:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       open:
+ *                         type: string
+ *                       close:
+ *                         type: string
+ *             image:
+ *               type: array
+ *               items:
+ *                 type: string
+ *             contact:
+ *               type: object
+ *               properties:
+ *                 phone:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *             location:
+ *               type: object
+ *               properties:
+ *                 city:
+ *                   type: string
+ *                 address:
+ *                   type: string
+ *                 googlePlaceId:
+ *                   type: string
+ *                 coordinates:
+ *                   type: object
+ *                   properties:
+ *                     type:
+ *                       type: string
+ *                       enum: [Point]
+ *                     coordinates:
+ *                       type: array
+ *                       items:
+ *                         type: number
+ *                       minItems: 2
+ *                       maxItems: 2
+ *         employees:
+ *           type: array
+ *           items:
+ *             type: string
+ *         dishes:
+ *           type: array
+ *           items:
+ *             type: string
+ *         rewards:
+ *           type: array
+ *           items:
+ *             type: string
+ *         statistics:
+ *           type: string
+ *         badges:
+ *           type: array
+ *           items:
+ *             type: string
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ */
+
+/**
+ * @openapi
  * /restaurants:
  *   post:
  *     summary: Creates a restaurant

@@ -1,0 +1,121 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; padding: 1rem 0; }
+.card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden; display: flex; flex-direction: column; }
+.card-img { width: 100%; height: 160px; object-fit: cover; display: block; background: var(--color-background-secondary); }
+.card-body { padding: 14px 16px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.card-name { font-size: 15px; font-weight: 500; color: var(--color-text-primary); line-height: 1.3; }
+.rating { display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 500; color: #BA7517; white-space: nowrap; }
+.rating-dot { width: 8px; height: 8px; border-radius: 50%; background: #EF9F27; }
+.desc { font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: 11px; padding: 3px 8px; border-radius: 20px; background: var(--color-background-secondary); color: var(--color-text-secondary); border: 0.5px solid var(--color-border-tertiary); }
+.card-footer { padding: 10px 16px 14px; border-top: 0.5px solid var(--color-border-tertiary); display: flex; flex-direction: column; gap: 4px; }
+.meta { font-size: 12px; color: var(--color-text-secondary); display: flex; align-items: center; gap: 6px; }
+.meta-icon { width: 12px; height: 12px; opacity: 0.5; }
+.open-badge { font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 500; }
+.open { background: #EAF3DE; color: #3B6D11; }
+.closed { background: var(--color-background-secondary); color: var(--color-text-tertiary); }
+</style>
+
+<div class="grid" id="cards"></div>
+
+<script>
+const restaurants = [
+  {
+    name: "La Bodega del Mar",
+    desc: "Traditional Mediterranean seafood restaurant with a modern twist.",
+    rating: 4.7,
+    tags: ["Marisc", "Espanyol", "Wine Bar"],
+    address: "Carrer del Mar, 42",
+    phone: "+34 93 456 78 90",
+    img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    timetable: { monday: [[13,16],[20,23.5]], tuesday: [[13,16],[20,23.5]], wednesday: [[13,16],[20,23.5]], thursday: [[13,16],[20,23.5]], friday: [[13,16.5],[20,24]], saturday: [[13,16.5],[20,24]], sunday: [[13,17]] }
+  },
+  {
+    name: "Tokyo Ramen House",
+    desc: "Authentic Japanese ramen, crafted with 20-hour broth.",
+    rating: 4.5,
+    tags: ["Japonès", "Ramen"],
+    address: "Carrer de Consell de Cent, 281",
+    phone: "+34 93 222 33 44",
+    img: "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=600&q=80",
+    timetable: { tuesday: [[12,15],[19,22.5]], wednesday: [[12,15],[19,22.5]], thursday: [[12,15],[19,22.5]], friday: [[12,15],[19,23]], saturday: [[12,23]], sunday: [[12,16]] }
+  },
+  {
+    name: "El Rincón del Taco",
+    desc: "Authentic street-style tacos and handmade margaritas in a vibrant atmosphere.",
+    rating: 4.8,
+    tags: ["Mexicà", "Street Food", "Taperia"],
+    address: "Carrer de Manso, 12",
+    phone: "+34 93 111 22 33",
+    img: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80",
+    timetable: { tuesday: [[18,23.5]], wednesday: [[18,23.5]], thursday: [[18,23.5]], friday: [[13,16],[19,25]], saturday: [[13,25]], sunday: [[13,22]] }
+  },
+  {
+    name: "Verd & Co",
+    desc: "Fresh, locally sourced plant-based bowls and organic juices.",
+    rating: 4.6,
+    tags: ["Vegà", "Vegetarià", "Cafeteria", "Gluten Free"],
+    address: "Via Augusta, 14",
+    phone: "+34 93 555 66 77",
+    img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80",
+    timetable: { monday: [[9,20]], tuesday: [[9,20]], wednesday: [[9,20]], thursday: [[9,20]], friday: [[9,21]], saturday: [[10,21]] }
+  },
+  {
+    name: "L'Art de la Pizza",
+    desc: "Wood-fired neapolitan pizzas following traditional 18th-century recipes.",
+    rating: 4.9,
+    tags: ["Italià", "Pizzeria", "Gourmet"],
+    address: "Carrer d'Enric Granados, 45",
+    phone: "+34 93 888 99 00",
+    img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&q=80",
+    timetable: { monday: [[19.5,23.5]], wednesday: [[19.5,23.5]], thursday: [[19.5,23.5]], friday: [[13.5,15.5],[19.5,24]], saturday: [[13.5,16],[19.5,24]], sunday: [[13.5,16],[19.5,23.5]] }
+  }
+];
+
+const days = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
+
+function isOpenNow(timetable) {
+  const now = new Date();
+  const day = days[now.getDay()];
+  const slots = timetable[day];
+  if (!slots) return false;
+  const cur = now.getHours() + now.getMinutes() / 60;
+  return slots.some(([o, c]) => cur >= o && cur < c);
+}
+
+const container = document.getElementById("cards");
+restaurants.forEach(r => {
+  const open = isOpenNow(r.timetable);
+  container.innerHTML += `
+    <div class="card">
+      <img class="card-img" src="${r.img}" alt="${r.name}" loading="lazy" />
+      <div class="card-body">
+        <div class="card-top">
+          <span class="card-name">${r.name}</span>
+          <span class="rating"><span class="rating-dot"></span>${r.rating}</span>
+        </div>
+        <p class="desc">${r.desc}</p>
+        <div class="tags">${r.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+      </div>
+      <div class="card-footer">
+        <div class="meta">
+          <svg class="meta-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1.5A5 5 0 1 1 8 11.5a5 5 0 0 1 0-10zm0 2v3l2 1.2"/></svg>
+          <span class="open-badge ${open ? 'open' : 'closed'}">${open ? 'Open now' : 'Closed'}</span>
+        </div>
+        <div class="meta">
+          <svg class="meta-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1C5.24 1 3 3.24 3 6c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 6.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>
+          ${r.address}
+        </div>
+        <div class="meta">
+          <svg class="meta-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2h2.5l1 3-1.5 1a8 8 0 0 0 4 4l1-1.5 3 1V13A1 1 0 0 1 12 14C6.48 14 2 9.52 2 4a1 1 0 0 1 1-1z"/></svg>
+          ${r.phone}
+        </div>
+      </div>
+    </div>`;
+});
+</script>
