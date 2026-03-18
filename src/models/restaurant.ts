@@ -26,9 +26,9 @@ export interface IRestaurant {
             city: string;
             address?: string;
             googlePlaceId?: string;
-            coordinates: {
-                type: { type: String, enum: ['Point'], default: 'Point' },
-                coordinates: [number, number]; // [longitude, latitude]
+            coordinates?: {
+                type: string;
+                coordinates: [number, number];
             };
         };
     };
@@ -45,25 +45,29 @@ const restaurantSchema = new Schema<IRestaurant>(
         profile: {
             name: { type: String, required: true },
             description: { type: String, required: true },
-            rating: { type: Number, default: 0 }, // inicialment 0
-            category: [{
-                type: String,
-                required: true,
-                enum: [
-                    'Italià', 'Japonès', 'Sushi', 'Mexicà', 'Xinès', 'Indi', 'Tailandès', 'Francès',
-                    'Espanyol', 'Grec', 'Turc', 'Coreà', 'Vietnamita','Alemany', 'Brasileny', 'Peruà', 'Vegà', 'Vegetarià', 'Marisc', 'Carn',
-                    'Pizzeria', 'Cafeteria', 'Ramen', 'Gluten Free','Gourmet', 'Fast Food', 'Buffet', 'Food Truck',
-                    'Lounge', 'Pub', 'Wine Bar', 'Rooftop', 'Bar', 'Taperia', 'Gelateria', 'Estrella Michelin','Street Food'
-                ]
-            }],
+            rating: { type: Number, default: 0 },
+            category: {
+                type: [{
+                    type: String,
+                    required: true,
+                    enum: [
+                        'Italià', 'Japonès', 'Sushi', 'Mexicà', 'Xinès', 'Indi', 'Tailandès', 'Francès',
+                        'Espanyol', 'Grec', 'Turc', 'Coreà', 'Vietnamita', 'Alemany', 'Brasileny', 'Peruà',
+                        'Vegà', 'Vegetarià', 'Marisc', 'Carn', 'Pizzeria', 'Cafeteria', 'Ramen', 'Gluten Free',
+                        'Gourmet', 'Fast Food', 'Buffet', 'Food Truck', 'Lounge', 'Pub', 'Wine Bar', 'Rooftop',
+                        'Bar', 'Taperia', 'Gelateria', 'Estrella Michelin', 'Street Food'
+                    ]
+                }],
+                required: true
+            },
             timetable: {
-                monday: [{ open: { type: String }, close: { type: String }}],
-                tuesday: [{ open: { type: String }, close: { type: String }}],
-                wednesday: [{ open: { type: String }, close: { type: String }}],
-                thursday: [{ open: { type: String }, close: { type: String }}],
-                friday: [{ open: { type: String }, close: { type: String }}],
-                saturday: [{ open: { type: String }, close: { type: String }}],
-                sunday: [{ open: { type: String }, close: { type: String }}]
+                monday: [{ open: { type: String }, close: { type: String } }],
+                tuesday: [{ open: { type: String }, close: { type: String } }],
+                wednesday: [{ open: { type: String }, close: { type: String } }],
+                thursday: [{ open: { type: String }, close: { type: String } }],
+                friday: [{ open: { type: String }, close: { type: String } }],
+                saturday: [{ open: { type: String }, close: { type: String } }],
+                sunday: [{ open: { type: String }, close: { type: String } }]
             },
             image: [{ type: String }],
             contact: {
@@ -72,24 +76,24 @@ const restaurantSchema = new Schema<IRestaurant>(
             },
             location: {
                 city: { type: String, required: true },
-                address: { type: String, default: '' },
+                address: { type: String, required: false, default: '' },
+                googlePlaceId: { type: String, required: false },
                 coordinates: {
-                    type: { type: String, enum: ['Point'], default: 'Point' },
-                    coordinates: { type: [Number], required: true }
+                    type: { type: String, enum: ['Point'] },
+                    coordinates: { type: [Number], required: false }
                 }
             },
         },
-        employees: [{ type: Schema.Types.ObjectId, ref: "Employee" }],
-        dishes: [{ type: Schema.Types.ObjectId, ref: "Dish" }],
-        rewards: [{ type: Schema.Types.ObjectId, ref: "Reward" }],
+        employees:  [{ type: Schema.Types.ObjectId, ref: "Employee" }],
+        dishes:     [{ type: Schema.Types.ObjectId, ref: "Dish" }],
+        rewards:    [{ type: Schema.Types.ObjectId, ref: "Reward" }],
         statistics: { type: Schema.Types.ObjectId, ref: "Statistics" },
-        badges: [{ type: Schema.Types.ObjectId, ref: "Badge" }]
+        badges:     [{ type: Schema.Types.ObjectId, ref: "Badge" }]
     },
     { timestamps: true }
 );
 
-// Index geoespacial
-restaurantSchema.index({ "profile.location.coordinates": "2dsphere" }, { sparse: true });
+// Uncomment once coordinates are always provided and valid:
+// restaurantSchema.index({ "profile.location.coordinates": "2dsphere" }, { sparse: true });
 
-// 3️⃣ Model
 export const RestaurantModel = model<IRestaurant>("Restaurant", restaurantSchema);
