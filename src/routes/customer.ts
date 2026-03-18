@@ -194,7 +194,7 @@ router.put('/:customerId', ValidateJoi(Schemas.customer.update), controller.upda
 // ─── DELETE /customers/:customerId  (soft delete) ─────────────────────────────
 /**
  * @openapi
- * /customers/{customerId}:
+ * /customers/{customerId}/soft:
  *   delete:
  *     summary: Soft-deletes a customer (sets isActive=false, stamps deletedAt)
  *     tags: [Customer]
