@@ -61,9 +61,22 @@ const getReviewsByRestaurant = async (restaurantId: string): Promise<IReview[]> 
 
 // Obtener reviews por cliente
 const getReviewsByCustomer = async (customerId: string): Promise<IReview[]> => {
-    return await ReviewModel.find({ customer_id: customerId })
-        .populate('restaurant_id', 'name image')
+    if (!mongoose.Types.ObjectId.isValid(customerId)) return [];
+
+    const reviews = await ReviewModel.find({ customer_id: customerId })
+        .populate({
+            path: 'restaurant_id',
+            select: 'profile.name'
+        })
         .lean();
+
+    return reviews.map((r: any) => ({
+        ...r,
+        restaurant_id: {
+            _id: r.restaurant_id._id,
+            name: r.restaurant_id.profile?.name
+        }
+    }));
 };
 
 // Dar like
