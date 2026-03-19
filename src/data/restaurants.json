@@ -1,5 +1,6 @@
 [
   {
+    "_id": "65f1c2a1b2c3d4e5f6789001",
     "profile": {
       "name": "La Bodega del Mar",
       "description": "Traditional Mediterranean seafood restaurant with a modern twist.",
@@ -20,37 +21,24 @@
         "https://images.pexels.com/photos/815525/pexels-photo-815525.jpeg",
         "https://images.pexels.com/photos/11714370/pexels-photo-11714370.jpeg"
       ],
-      "contact": {
-        "phone": "+34 93 456 78 90",
-        "email": "reservas@labodegadelmar.com"
-      },
+      "contact": { "phone": "+34 93 456 78 90", "email": "reservas@labodegadelmar.com" },
       "location": {
         "city": "Barcelona",
         "address": "Carrer del Mar, 42, 08003 Barcelona",
         "googlePlaceId": "ChIJAQCl79yipBIRpMnMEzTB5jA",
-        "coordinates": {
-          "type": "Point",
-          "coordinates": [2.1834, 41.3851]
-        }
+        "coordinates": { "type": "Point", "coordinates": [2.1834, 41.3851] }
       }
     },
-    "employees": [
-      "65f1c2a1b2c3d4e5f6789011",
-      "65f1c2a1b2c3d4e5f6789012"
-    ],
-    "rewards": [
-      "65f1c2a1b2c3d4e5f6789021",
-      "65f1c2a1b2c3d4e5f6789022",
-      "65f1c2a1b2c3d4e5f6789023"
-    ],
+    "employees": ["65f1c2a1b2c3d4e5f6789011", "65f1c2a1b2c3d4e5f6789012"],
+    "rewards": ["65f1c2a1b2c3d4e5f6789021", "65f1c2a1b2c3d4e5f6789022", "65f1c2a1b2c3d4e5f6789023"],
+    "visits": ["65f1c2a1b2c3d4e5f6789064", "65f1c2a1b2c3d4e5f6789062", "65f1c2a1b2c3d4e5f6789061"],
     "statistics": "65f1c2a1b2c3d4e5f6789041",
-    "badges": [
-      "65f1c2a1b2c3d4e5f6789031"
-    ],
+    "badges": ["65f1c2a1b2c3d4e5f6789031"],
     "createdAt": "2023-06-01T08:00:00.000Z",
     "updatedAt": "2024-06-15T10:00:00.000Z"
   },
   {
+    "_id": "65f1c2a1b2c3d4e5f6789002",
     "profile": {
       "name": "Tokyo Ramen House",
       "description": "Authentic Japanese ramen, crafted with 20-hour broth.",
@@ -74,20 +62,19 @@
       "location": {
         "city": "Barcelona",
         "address": "Carrer de Consell de Cent, 281, 08011 Barcelona",
-        "coordinates": {
-          "type": "Point",
-          "coordinates": [2.1554, 41.3902]
-        }
+        "coordinates": { "type": "Point", "coordinates": [2.1554, 41.3902] }
       }
     },
     "employees": ["65f1c2a1b2c3d4e5f6789013"],
     "rewards": ["65f1c2a1b2c3d4e5f6789024"],
+    "visits": ["65f1c2a1b2c3d4e5f6789063"],
     "statistics": "65f1c2a1b2c3d4e5f6789042",
     "badges": [],
     "createdAt": "2023-11-15T10:00:00.000Z",
     "updatedAt": "2024-05-01T14:00:00.000Z"
   },
   {
+    "_id": "65f1c2a1b2c3d4e5f6789003",
     "profile": {
       "name": "El Rincón del Taco",
       "description": "Authentic street-style tacos and handmade margaritas in a vibrant atmosphere.",
@@ -107,28 +94,24 @@
         "https://images.pexels.com/photos/7772201/pexels-photo-7772201.jpeg",
         "https://images.pexels.com/photos/27590338/pexels-photo-27590338.jpeg"
       ],
-      "contact": {
-        "phone": "+34 93 111 22 33",
-        "email": "hola@rincontaco.es"
-      },
+      "contact": { "phone": "+34 93 111 22 33", "email": "hola@rincontaco.es" },
       "location": {
         "city": "Barcelona",
         "address": "Carrer de Manso, 12, 08015 Barcelona",
         "googlePlaceId": "ChIJN1t_tDeuEmsRUsoyG83frY4",
-        "coordinates": {
-          "type": "Point",
-          "coordinates": [2.1622, 41.3765]
-        }
+        "coordinates": { "type": "Point", "coordinates": [2.1622, 41.3765] }
       }
     },
     "employees": ["65f1c2a1b2c3d4e5f6789015"],
     "rewards": ["65f1c2a1b2c3d4e5f6789025"],
+    "visits": [],
     "statistics": "65f1c2a1b2c3d4e5f6789043",
     "badges": ["65f1c2a1b2c3d4e5f6789032"],
     "createdAt": "2024-01-10T11:00:00.000Z",
     "updatedAt": "2024-06-01T09:30:00.000Z"
   },
   {
+    "_id": "65f1c2a1b2c3d4e5f6789004",
     "profile": {
       "name": "Verd & Co",
       "description": "Fresh, locally sourced plant-based bowls and organic juices.",
@@ -148,27 +131,23 @@
         "https://images.pexels.com/photos/14774990/pexels-photo-14774990.jpeg",
         "https://images.pexels.com/photos/10497775/pexels-photo-10497775.jpeg"
       ],
-      "contact": {
-        "phone": "+34 93 555 66 77",
-        "email": "info@verdandco.cat"
-      },
+      "contact": { "phone": "+34 93 555 66 77", "email": "info@verdandco.cat" },
       "location": {
         "city": "Barcelona",
         "address": "Via Augusta, 14, 08006 Barcelona",
-        "coordinates": {
-          "type": "Point",
-          "coordinates": [2.1565, 41.3968]
-        }
+        "coordinates": { "type": "Point", "coordinates": [2.1565, 41.3968] }
       }
     },
     "employees": ["65f1c2a1b2c3d4e5f6789016", "65f1c2a1b2c3d4e5f6789017"],
     "rewards": [],
+    "visits": [],
     "statistics": "65f1c2a1b2c3d4e5f6789044",
     "badges": [],
     "createdAt": "2024-02-14T08:30:00.000Z",
     "updatedAt": "2024-05-20T12:00:00.000Z"
   },
   {
+    "_id": "65f1c2a1b2c3d4e5f6789005",
     "profile": {
       "name": "L'Art de la Pizza",
       "description": "Wood-fired neapolitan pizzas following traditional 18th-century recipes.",
@@ -188,20 +167,16 @@
         "https://images.pexels.com/photos/15969758/pexels-photo-15969758.jpeg",
         "https://images.pexels.com/photos/35005853/pexels-photo-35005853.jpeg"
       ],
-      "contact": {
-        "phone": "+34 93 888 99 00"
-      },
+      "contact": { "phone": "+34 93 888 99 00" },
       "location": {
         "city": "Barcelona",
         "address": "Carrer d'Enric Granados, 45, 08008 Barcelona",
-        "coordinates": {
-          "type": "Point",
-          "coordinates": [2.1578, 41.3915]
-        }
+        "coordinates": { "type": "Point", "coordinates": [2.1578, 41.3915] }
       }
     },
     "employees": ["65f1c2a1b2c3d4e5f6789018"],
     "rewards": ["65f1c2a1b2c3d4e5f6789026"],
+    "visits": [],
     "statistics": "65f1c2a1b2c3d4e5f6789045",
     "badges": ["65f1c2a1b2c3d4e5f6789033"],
     "createdAt": "2023-09-05T17:00:00.000Z",

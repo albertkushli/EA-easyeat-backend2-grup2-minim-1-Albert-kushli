@@ -24,8 +24,11 @@ const getReward = async (rewardId: string) => {
     return await RewardModel.findById(rewardId);
 };
 
-const getAllRewards = async () => {
-    return await RewardModel.find();
+const getAllRewards = async (page: number = 1, limit: number = 10) => {
+    const skip = (page - 1) * limit;
+    return await RewardModel.find()
+        .skip(skip)
+        .limit(limit);
 };
 
 const updateReward = async (rewardId: string, data: Partial<IReward>) => {

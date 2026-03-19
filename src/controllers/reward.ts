@@ -23,7 +23,10 @@ const readReward = async (req: Request, res: Response, next: NextFunction) => {
 
 const readAll = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const rewards = await RewardService.getAllRewards();
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = parseInt(req.query.limit as string) || 10;
+        
+        const rewards = await RewardService.getAllRewards(page, limit);
         return res.status(200).json(rewards);
     } catch (error) {
         return res.status(500).json({ error });

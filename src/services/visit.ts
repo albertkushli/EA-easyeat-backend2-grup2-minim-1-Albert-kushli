@@ -20,7 +20,7 @@ const getAllVisits = async (filters: { customer_id?: string; restaurant_id?: str
     if (filters.customer_id) query.customer_id = new mongoose.Types.ObjectId(filters.customer_id);
     if (filters.restaurant_id) query.restaurant_id = new mongoose.Types.ObjectId(filters.restaurant_id);
 
-    return await VisitModel.find(query);
+    return await VisitModel.find(query).populate('customer_id');
 };
 
 const getVisitFull = async (visitId: string) => {
