@@ -60,24 +60,58 @@ const getReviewsByRestaurant = async (restaurantId: string): Promise<IReview[]> 
 };
 
 // Obtener reviews por cliente
-const getReviewsByCustomer = async (customerId: string): Promise<IReview[]> => {
-    if (!mongoose.Types.ObjectId.isValid(customerId)) return [];
+const getReviewsByCustomer = async (
+  customerId: string,
+  limit = 5,
+  skip = 0,
+  minRating?: number,
+  sortByLikes?: boolean
+) => {
+  if (!mongoose.Types.ObjectId.isValid(customerId)) {
+    return { data: [], total: 0 };
+  }
 
-    const reviews = await ReviewModel.find({ customer_id: customerId })
-        .populate({
-            path: 'restaurant_id',
-            select: 'profile.name'
-        })
-        .lean();
-    return reviews.map((r: any) => ({
-        ...r,
-        restaurant_id: {
-            _id: r.restaurant_id._id,
-            name: r.restaurant_id.profile?.name
-        }
-    }));
+  const filter: any = {
+    customer_id: customerId,
+    deleted: false
+  };
+
+
+  if (minRating) {
+    filter.rating = { $gte: minRating };
+  }
+
+
+  const sort: any = {};
+  if (sortByLikes) {
+    sort.likes = -1;
+  }
+
+  const [reviews, total] = await Promise.all([
+    ReviewModel.find(filter)
+      .sort(sort)
+      .skip(skip)
+      .limit(limit)
+      .populate({
+        path: 'restaurant_id',
+        select: 'profile'
+      })
+      .lean(),
+
+    ReviewModel.countDocuments(filter)
+  ]);
+
+  return {
+    data: reviews.map((r: any) => ({
+      ...r,
+      restaurant_id: {
+        _id: r.restaurant_id._id,
+        name: r.restaurant_id.profile?.name
+      }
+    })),
+    total
+  };
 };
-;
 
 // Dar like
 const likeReview = async (reviewId: string): Promise<IReview | null> => {

@@ -86,16 +86,24 @@ const readByRestaurant = async (req: Request, res: Response, next: NextFunction)
 };
 
 // Obtener reviews por cliente
-const readByCustomer = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const reviews = await ReviewService.getReviewsByCustomer(req.params.customerId);
-        return res.status(200).json(reviews);
+const readByCustomer = async (req: Request, res: Response) => {
+  const { customerId } = req.params;
 
-    } catch (error) {
-        return next(error);
-    }
+  const limit = Number(req.query.limit) || 5;
+  const skip = Number(req.query.skip) || 0;
+  const minRating = req.query.minRating ? Number(req.query.minRating) : undefined;
+  const sortByLikes = req.query.sortByLikes === 'true';
+
+  const result = await ReviewService.getReviewsByCustomer(
+    customerId,
+    limit,
+    skip,
+    minRating,
+    sortByLikes
+  );
+
+  res.json(result);
 };
-
 // Dar like a una review
 const likeReview = async (req: Request, res: Response, next: NextFunction) => {
     try {
