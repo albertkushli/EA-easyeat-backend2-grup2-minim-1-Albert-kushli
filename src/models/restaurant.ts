@@ -1,6 +1,6 @@
 import { Schema, model, Types } from "mongoose";
 
-// 1️⃣ Interface
+// 1️⃣ Interface Actualizada
 export interface IRestaurant {
     _id?: Types.ObjectId;
     profile: {
@@ -37,9 +37,10 @@ export interface IRestaurant {
     rewards?: Types.ObjectId[];
     statistics?: Types.ObjectId;
     badges?: Types.ObjectId[];
+    visits?: Types.ObjectId[]; 
 }
 
-// 2️⃣ Schema
+// 2️⃣ Schema Actualizado
 const restaurantSchema = new Schema<IRestaurant>(
     {
         profile: {
@@ -88,19 +89,18 @@ const restaurantSchema = new Schema<IRestaurant>(
         dishes:     [{ type: Schema.Types.ObjectId, ref: "Dish" }],
         rewards:    [{ type: Schema.Types.ObjectId, ref: "Reward" }],
         statistics: { type: Schema.Types.ObjectId, ref: "Statistics" },
-        badges:     [{ type: Schema.Types.ObjectId, ref: "Badge" }]
+        badges:     [{ type: Schema.Types.ObjectId, ref: "Badge" }],
+        visits:    [{ type: Schema.Types.ObjectId, ref: "Visit" }] 
     },
     { timestamps: true }
 );
 
-// Uncomment once coordinates are always provided and valid:
-// Geospatial — required for $geoNear / $near
+// Índices (Se mantienen igual)
 restaurantSchema.index(
     { 'profile.location.coordinates': '2dsphere' },
     { sparse: true }
 );
 
-// Compound — covers the most common filter combos
 restaurantSchema.index({
     'profile.rating':       -1,
     'profile.category':      1,

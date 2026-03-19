@@ -37,6 +37,7 @@ const getRestaurantFull = async (restaurantId: string): Promise<IRestaurant | nu
         .populate('rewards')
         .populate('badges')
         .populate('statistics')
+        .populate('visits')
         .lean();
 };
 

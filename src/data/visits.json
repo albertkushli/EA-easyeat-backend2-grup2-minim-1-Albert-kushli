@@ -5,9 +5,7 @@
     "restaurant_id": "65f1c2a1b2c3d4e5f6789001",
     "date": "2024-06-14T21:00:00.000Z",
     "pointsEarned": 95,
-    "billAmount": 47.50,
-    "createdAt": "2024-06-14T21:00:00.000Z",
-    "updatedAt": "2024-06-14T21:00:00.000Z"
+    "billAmount": 47.50
   },
   {
     "_id": "65f1c2a1b2c3d4e5f6789062",
@@ -15,9 +13,7 @@
     "restaurant_id": "65f1c2a1b2c3d4e5f6789001",
     "date": "2024-05-20T20:00:00.000Z",
     "pointsEarned": 120,
-    "billAmount": 62.00,
-    "createdAt": "2024-05-20T20:00:00.000Z",
-    "updatedAt": "2024-05-20T20:00:00.000Z"
+    "billAmount": 62.00
   },
   {
     "_id": "65f1c2a1b2c3d4e5f6789063",
@@ -25,9 +21,7 @@
     "restaurant_id": "65f1c2a1b2c3d4e5f6789002",
     "date": "2024-04-10T13:00:00.000Z",
     "pointsEarned": 50,
-    "billAmount": 24.00,
-    "createdAt": "2024-04-10T13:00:00.000Z",
-    "updatedAt": "2024-04-10T13:00:00.000Z"
+    "billAmount": 24.00
   },
   {
     "_id": "65f1c2a1b2c3d4e5f6789064",
@@ -35,8 +29,6 @@
     "restaurant_id": "65f1c2a1b2c3d4e5f6789001",
     "date": "2024-05-10T14:00:00.000Z",
     "pointsEarned": 0,
-    "billAmount": 18.50,
-    "createdAt": "2024-05-10T14:00:00.000Z",
-    "updatedAt": "2024-05-10T14:00:00.000Z"
+    "billAmount": 18.50
   }
 ]
