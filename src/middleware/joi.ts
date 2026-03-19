@@ -245,11 +245,13 @@ export const Schemas = {
             date:          Joi.date().default(() => new Date()),
             pointsEarned:  Joi.number().min(0).default(0),
             billAmount:    Joi.number().min(0).default(0),
+            deletedAt:     Joi.any().strip(),
         }),
         update: Joi.object<IVisit>({
             date:         Joi.date(),
             pointsEarned: Joi.number().min(0),
             billAmount:   Joi.number().min(0),
+            deletedAt:    Joi.any().strip(),
         }),
     },
 
