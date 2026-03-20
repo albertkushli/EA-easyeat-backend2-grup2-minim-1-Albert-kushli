@@ -1,59 +1,104 @@
-import { Schema, model, Types, Document } from 'mongoose';
+import { Schema, model, Types, Query, Document, Model } from 'mongoose';
 
-// 1️⃣ Interface 
-// Estenem de Document per incloure les propietats de Mongoose si cal
+// ─── 1. Interface ─────────────────────────────────────────────────────────────
+
 export interface IVisit {
-    _id?: Types.ObjectId;
-    customer_id: Types.ObjectId;      // reference to Customer
-    restaurant_id: Types.ObjectId;    // reference to Restaurant
-    date: Date;
+    _id?:          Types.ObjectId;
+    customer_id:   Types.ObjectId;
+    restaurant_id: Types.ObjectId;
+    date:          Date;
     pointsEarned?: number;
-    billAmount?: number;
-    // --- NOVES PROPIETATS PER REQUERIMENTS ---
-    deletedAt?: Date | null;          // Per al Soft Delete
+    billAmount?:   number;
+    deletedAt:     Date | null;
 }
 
-// 2️⃣ Schema
-const visitSchema = new Schema<IVisit>({
-    customer_id: { 
-        type: Schema.Types.ObjectId, 
-        ref: 'Customer', 
-        required: true 
+// ─── 2. Query helpers ─────────────────────────────────────────────────────────
+
+export interface VisitQueryHelpers {
+    active(): Query<any, Document<unknown, any, IVisit> & IVisit> & VisitQueryHelpers;
+}
+
+// ─── 3. Model type ────────────────────────────────────────────────────────────
+
+export type VisitModelType = Model<IVisit, VisitQueryHelpers>;
+
+// ─── 4. Schema ────────────────────────────────────────────────────────────────
+
+const visitSchema = new Schema<IVisit, VisitModelType, {}, VisitQueryHelpers>(
+    {
+        customer_id: {
+            type:     Schema.Types.ObjectId,
+            ref:      'Customer',
+            required: [true, 'customer_id is required'],
+        },
+        restaurant_id: {
+            type:     Schema.Types.ObjectId,
+            ref:      'Restaurant',
+            required: [true, 'restaurant_id is required'],
+        },
+        date: {
+            type:     Date,
+            default:  Date.now,
+            required: true,
+        },
+        pointsEarned: {
+            type:    Number,
+            min:     [0, 'pointsEarned must be ≥ 0'],
+            default: 0,
+        },
+        billAmount: {
+            type:    Number,
+            min:     [0, 'billAmount must be ≥ 0'],
+            default: 0,
+        },
+        deletedAt: {
+            type:    Date,
+            default: null,
+        },
     },
-    restaurant_id: { 
-        type: Schema.Types.ObjectId, 
-        ref: 'Restaurant', 
-        required: true 
+    {
+        timestamps:  true,
+        versionKey:  false, // ✅ del incoming
     },
-    date: { 
-        type: Date, 
-        default: () => new Date(), 
-        required: true 
-    },
-    pointsEarned: { 
-        type: Number, 
-        default: 0,
-        min: 0 
-    },
-    billAmount: { 
-        type: Number, 
-        default: 0,
-        min: 0 
-    },
-    // Camp per a l'esborrat tou
-    deletedAt: { 
-        type: Date, 
-        default: null 
+);
+
+// ─── 5. Indexes ───────────────────────────────────────────────────────────────
+
+visitSchema.index({ date: -1 });                              // ✅ del incoming, acelera sort
+visitSchema.index({ customer_id: 1, restaurant_id: 1, deletedAt: 1 }); // ✅ del doc 14
+
+// ─── 6. Query helper — .active() ─────────────────────────────────────────────
+
+visitSchema.query.active = function (this: VisitModelType) {
+    return this.where({ deletedAt: null });
+};
+
+// ─── 7. Pre-save relational validation ───────────────────────────────────────
+
+visitSchema.pre('save', async function (next) {
+    try {
+        const { CustomerModel }   = await import('./customer');
+        const { RestaurantModel } = await import('./restaurant');
+
+        if (this.isModified('customer_id') || this.isNew) {
+            const customerExists = await CustomerModel.exists({ _id: this.customer_id });
+            if (!customerExists) {
+                return next(new Error(`Customer with id ${this.customer_id} does not exist`));
+            }
+        }
+
+        if (this.isModified('restaurant_id') || this.isNew) {
+            const restaurantExists = await RestaurantModel.exists({ _id: this.restaurant_id });
+            if (!restaurantExists) {
+                return next(new Error(`Restaurant with id ${this.restaurant_id} does not exist`));
+            }
+        }
+        next();
+    } catch (err: any) {
+        next(err);
     }
-}, { 
-    timestamps: true, // Crea automàticament createdAt i updatedAt
-    versionKey: false 
 });
 
-// 3️⃣ Índexs per a Paginació i Cerca (Optimització)
-// Indexar per data ajuda a que el .sort({date: -1}) de la paginació sigui ràpid
-visitSchema.index({ date: -1 });
-visitSchema.index({ customer_id: 1, deletedAt: 1 });
+// ─── 8. Model ─────────────────────────────────────────────────────────────────
 
-// 4️⃣ Model
-export const VisitModel = model<IVisit>('Visit', visitSchema);
+export const VisitModel = model<IVisit, VisitModelType>('Visit', visitSchema);
