@@ -35,12 +35,12 @@ const employeeSchema = new Schema<IEmployee, EmployeeModel, IEmployeeMethods>(
     {
         restaurant_id: { type: Schema.Types.ObjectId, ref: 'Restaurant', required: true },
         profile: {
-            name:     { type: String, required: true },
+            name: { type: String, required: true },
             // select: false keeps the hash out of query results by default
             password: { type: String, select: false },
-            email:    { type: String },
-            phone:    { type: String, trim: true },
-            role:     { type: String, enum: ['owner', 'staff'], default: 'staff' },
+            email: { type: String },
+            phone: { type: String, trim: true },
+            role: { type: String, enum: ['owner', 'staff'], default: 'staff' },
         },
         refreshTokenHash: { type: String },
         isActive: { type: Boolean, required: true, default: true },
@@ -53,7 +53,6 @@ const employeeSchema = new Schema<IEmployee, EmployeeModel, IEmployeeMethods>(
 employeeSchema.pre('save', async function () {
     // Password is nested inside profile, so we check 'profile.password'
     if (!this.isModified('profile.password') || !this.profile?.password) return;
-
     const salt = await bcrypt.genSalt(SALT_ROUNDS);
     this.profile.password = await bcrypt.hash(this.profile.password, salt);
 });
