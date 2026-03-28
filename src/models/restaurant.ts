@@ -53,7 +53,7 @@ export interface IRestaurantContact {
 export interface IRestaurantProfile {
     name:        string;              // required, unique per city (compound index)
     description: string;             // required
-    rating:      number;             // 0–10, default 0, updated from reviews
+    globalRating:      number;             // 0–10, default 0, updated from reviews
     category:    RestaurantCategory[]; // required, enum-validated
     timetable?:  ITimetable;
     image?:      string[];
@@ -74,7 +74,7 @@ export interface IRestaurant {
     statistics?: Types.ObjectId;
     badges?:    Types.ObjectId[];
     visits?:    Types.ObjectId[];
-    /** null  → restaurant is active; Date → soft-deleted at that timestamp */
+    reviews?:   Types.ObjectId[];
     deletedAt?: Date | null;
 }
 
@@ -89,7 +89,9 @@ export interface RestaurantQueryHelpers {
 
 type RestaurantQuery = Query<any, IRestaurant> & RestaurantQueryHelpers;
 
-export interface RestaurantModelType extends Model<IRestaurant, RestaurantQueryHelpers> {}
+export interface RestaurantModelType extends Model<IRestaurant, RestaurantQueryHelpers> {
+    softDelete(restaurantId: string): Promise<IRestaurant | null>;
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Regex validators (reused in schema)
@@ -165,8 +167,8 @@ const restaurantSchema = new Schema<IRestaurant, RestaurantModelType, {}, Restau
                 trim: true, minlength: [10,   'Description must be at least 10 characters.'],
                 maxlength: [2000, 'Description must be at most 2000 characters.'],
             },
-            rating: { type: Number, default: 0, min: [0,  'Rating cannot be below 0.'],
-                max: [10, 'Rating cannot exceed 10.'],
+            globalRating: { type: Number, default: 0, min: [0,  'globalRating cannot be below 0.'],
+                max: [10, 'globalRating cannot exceed 10.'],
             },
             category: { type: [{ type: String, enum: RESTAURANT_CATEGORIES }],
                 required: [true, 'At least one category is required.'],
@@ -202,6 +204,7 @@ const restaurantSchema = new Schema<IRestaurant, RestaurantModelType, {}, Restau
         statistics: { type: Schema.Types.ObjectId,  ref: 'Statistics' },
         badges:     [{ type: Schema.Types.ObjectId, ref: 'Badge'    }],
         visits:     [{ type: Schema.Types.ObjectId, ref: 'Visit'    }],
+        reviews:    [{ type: Schema.Types.ObjectId, ref: 'Review'   }],
         deletedAt:  { type: Date, default: null },
     },
     {
@@ -221,7 +224,7 @@ restaurantSchema.index({ 'profile.location.coordinates': '2dsphere' });
 restaurantSchema.index({ 'profile.name': 1, 'profile.location.city': 1 }, { unique: true, name: 'unique_name_per_city' });
 
 // 3. Performance – common query fields
-restaurantSchema.index({ 'profile.rating': -1 });   // sort by rating
+restaurantSchema.index({ 'profile.globalRating': -1 });   // sort by globalRating
 restaurantSchema.index({ 'profile.category': 1 });   // filter by category
 restaurantSchema.index({ 'profile.location.city': 1 }); // filter by city
 restaurantSchema.index({ deletedAt: 1 });   // active-restaurant filter
@@ -239,14 +242,14 @@ restaurantSchema.query.active = function (this: RestaurantQuery): RestaurantQuer
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
- * Recalculate `profile.rating` from the aggregated reviews whenever the
+ * Recalculate `profile.globalRating` from the aggregated reviews whenever the
  * document is saved.  The actual aggregation is triggered from the Review
  * service (see services/review.ts) – here we only clamp the stored value
  * so it can never slip outside 0–10 due to a bad direct update.
  */
 restaurantSchema.pre('save', function (next) {
-    if (this.isModified('profile.rating')) {
-        this.profile.rating = Math.min(10, Math.max(0, this.profile.rating)); }
+    if (this.isModified('profile.globalRating')) {
+        this.profile.globalRating = Math.min(10, Math.max(0, this.profile.globalRating)); }
     next();
 });
 

@@ -70,7 +70,7 @@ const getReviewsByCustomer = async (
     customerId: string,
     limit = 5,
     skip = 0,
-    minRating?: number,
+    minglobalRating?: number,
     sortByLikes?: boolean
 ) => {
 
@@ -83,8 +83,8 @@ const getReviewsByCustomer = async (
         deleted: false
     };
 
-    if (minRating !== undefined) {
-        filter.rating = { $gte: minRating };
+    if (minglobalRating !== undefined) {
+        filter.globalRating = { $gte: minglobalRating };
     }
 
     const sort: any = sortByLikes ? { likes: -1 } : { date: -1 };

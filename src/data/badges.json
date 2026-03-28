@@ -1,5 +1,6 @@
 [
   {
+    "_id": "65f1c2a1b2c3d4e5f678a001",
     "title": "First Visit",
     "description": "You visited a restaurant for the first time!",
     "type": "customer",
@@ -7,6 +8,7 @@
     "updatedAt": "2024-01-15T10:00:00.000Z"
   },
   {
+    "_id": "65f1c2a1b2c3d4e5f678a002",
     "title": "Foodie Explorer",
     "description": "Visited 10 different restaurants.",
     "type": "customer",
@@ -14,6 +16,7 @@
     "updatedAt": "2024-02-01T08:30:00.000Z"
   },
   {
+    "_id": "65f1c2a1b2c3d4e5f678a003",
     "title": "Loyal Customer",
     "description": "Visited the same restaurant 20 times.",
     "type": "customer",
@@ -21,6 +24,7 @@
     "updatedAt": "2024-03-10T12:00:00.000Z"
   },
   {
+    "_id": "65f1c2a1b2c3d4e5f678a004",
     "title": "Top Reviewer",
     "description": "Wrote 15 reviews with photos.",
     "type": "customer",

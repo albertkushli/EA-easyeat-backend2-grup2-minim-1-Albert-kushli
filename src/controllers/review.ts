@@ -86,14 +86,14 @@ const readByCustomer = async (req: Request, res: Response, next: NextFunction) =
 
         const limit = Number(req.query.limit) || 5;
         const skip = Number(req.query.skip) || 0;
-        const minRating = req.query.minRating !== undefined ? Number(req.query.minRating) : undefined;
+        const minglobalRating = req.query.minglobalRating !== undefined ? Number(req.query.minglobalRating) : undefined;
         const sortByLikes = req.query.sortByLikes === 'true';
 
         const result = await ReviewService.getReviewsByCustomer(
             customerId,
             limit,
             skip,
-            minRating,
+            minglobalRating,
             sortByLikes
         );
 

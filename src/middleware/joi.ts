@@ -170,7 +170,7 @@ export const Schemas = {
             customer_id:   objectId.required(),
             restaurant_id: objectId.required(),
             date:          Joi.date().default(() => new Date()), // ✅ doc 15: opcional con default
-            rating:        Joi.number().min(1).max(10).required(),
+            globalRating:        Joi.number().min(1).max(10).required(),
             ratings: Joi.object({
                 foodQuality:  Joi.number().min(0).max(10),
                 staffService: Joi.number().min(0).max(10),
@@ -182,7 +182,7 @@ export const Schemas = {
         }),
         update: Joi.object<IReview>({
             date:   Joi.date(),
-            rating: Joi.number().min(1).max(10),
+            globalRating: Joi.number().min(1).max(10),
             ratings: Joi.object({
                 foodQuality:  Joi.number().min(0).max(10),
                 staffService: Joi.number().min(0).max(10),
@@ -253,7 +253,7 @@ export const Schemas = {
                 name:        Joi.string().min(2).max(120).required(),
                 description: Joi.string().min(10).max(2000).required(),
                 category:    Joi.array().items(Joi.string().valid(...categoryEnum)).min(1).required(),
-                rating:      Joi.number().min(0).max(10),
+                globalRating:      Joi.number().min(0).max(10),
                 timetable:   timetableSchema,
                 image:       Joi.array().items(Joi.string()),
                 contact: Joi.object({
@@ -281,7 +281,7 @@ export const Schemas = {
             profile: Joi.object({
                 name:        Joi.string(),
                 description: Joi.string(),
-                rating:      Joi.number().min(0).max(10),
+                globalRating:      Joi.number().min(0).max(10),
                 category:    Joi.array().items(Joi.string().valid(...categoryEnum)),
                 timetable:   timetableSchema,
                 image:       Joi.array().items(Joi.string().uri()),

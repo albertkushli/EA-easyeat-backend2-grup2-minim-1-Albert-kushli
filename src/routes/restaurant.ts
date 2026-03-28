@@ -21,7 +21,7 @@ const router = express.Router();
  *               type: string
  *             description:
  *               type: string
- *             rating:
+ *             globalRating:
  *               type: number
  *             category:
  *               type: array
@@ -143,6 +143,10 @@ const router = express.Router();
  *           type: array
  *           items:
  *             type: string
+ *         reviews: 
+ *           type: array
+ *           items:
+ *             type: string
  *         deletedAt:
  *           type: string
  *           format: date-time
@@ -261,12 +265,12 @@ router.get('/', controller.readAll);
  *         description: Comma-separated list of categories (must match schema enum)
  *         example: "Italià,Sushi"
  *       - in: query
- *         name: minRating
+ *         name: minglobalRating
  *         schema:
  *           type: number
  *           minimum: 0
  *           maximum: 10
- *         description: Minimum rating (inclusive)
+ *         description: Minimum globalRating (inclusive)
  *         example: 7
  *       - in: query
  *         name: city
@@ -290,7 +294,7 @@ router.get('/', controller.readAll);
  *         example: "2025-06-14T20:30:00"
  *     responses:
  *       200:
- *         description: List of matching restaurants, sorted by distance (if geo) or rating
+ *         description: List of matching restaurants, sorted by distance (if geo) or globalRating
  *         content:
  *           application/json:
  *             schema:
@@ -428,7 +432,7 @@ router.get('/:restaurantId/full', controller.getRestaurantFull);
  *                     type: string
  *                   description:
  *                     type: string
- *                   rating:
+ *                   globalRating:
  *                     type: number
  *                     minimum: 0
  *                     maximum: 10
@@ -558,7 +562,7 @@ router.get('/:restaurantId/full', controller.getRestaurantFull);
  *             profile:
  *               name: "La Pepita"
  *               description: "Cuina catalana de mercat amb productes locals"
- *               rating: 4.5
+ *               globalRating: 4.5
  *               category: ["Espanyol", "Taperia", "Wine Bar"]
  *               timetable:
  *                 monday: []

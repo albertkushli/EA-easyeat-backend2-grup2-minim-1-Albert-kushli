@@ -1,3 +1,4 @@
+import { profile } from 'console';
 import { RestaurantModel, IRestaurant } from '../models/restaurant';
 import { PipelineStage }               from 'mongoose';
 
@@ -11,11 +12,29 @@ const createRestaurant = async (data: Partial<IRestaurant>): Promise<IRestaurant
 };
 
 const getRestaurant = async (restaurantId: string): Promise<IRestaurant | null> => {
-    return RestaurantModel.findById(restaurantId).active().populate('rewards').lean();
+    const restaurant = await RestaurantModel
+        .findById(restaurantId)
+        .active()
+        .select('profile rewards badges')
+        .populate('rewards', 'name description pointsRequired active expiry')
+        .populate('badges', 'title description')
+        .lean<IRestaurant>();
+    return restaurant;
+        
 };
 
 const getAllRestaurants = async (): Promise<IRestaurant[]> => {
-    return RestaurantModel.find().active().sort({ 'profile.rating': -1 }).populate('rewards').lean();
+    const restaurants = await RestaurantModel
+        .find()
+        .active()
+        .sort({ 'profile.globalRating': -1 })
+        .select('profile.name profile.globalRating profile.category profile.image profile.location.city')
+        .lean<IRestaurant[]>();
+
+    return restaurants.map((r: IRestaurant) => ({
+        ...r,
+        profile: { ...r.profile, image: r.profile.image?.slice(0, 3) }
+    }));
 };
 
 const updateRestaurant = async ( restaurantId: string, data: Partial<IRestaurant> ): Promise<IRestaurant | null> => {
@@ -73,9 +92,15 @@ const getRestaurantWithCustomers = async (restaurantId: string): Promise<IRestau
 
 const getRestaurantFull = async (restaurantId: string): Promise<IRestaurant | null> => {
     return RestaurantModel
-        .findById(restaurantId).active().populate('employees').populate('rewards')
-        .populate('badges').populate('statistics')
-        .populate('visits').lean();
+        .findById(restaurantId).active()
+        .populate('employees')
+        .populate('rewards')
+        .populate('badges')
+        .populate('statistics')
+        .populate('dishes')
+        .populate('visits')
+        .populate('reviews')
+        .lean<IRestaurant>();
 };
 
 const getNearby = async ( lng: number, lat: number,
@@ -90,23 +115,23 @@ const getNearby = async ( lng: number, lat: number,
 
 const getBadges = async (restaurantId: string): Promise<IRestaurant | null> => {
     return RestaurantModel.findById(restaurantId)
-        .active().select('badges').populate('badges').lean();
+        .active().select('badges').populate('badges').lean<IRestaurant>();
 };
 
 const getStatistics = async (restaurantId: string): Promise<IRestaurant | null> => {
     return RestaurantModel
         .findById(restaurantId).active().select('statistics').populate('statistics')
-        .lean();
+        .lean<IRestaurant>();
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Rating recalculation
+// globalRating recalculation
 // ─────────────────────────────────────────────────────────────────────────────
 
-const updateRating = async ( restaurantId: string, newAverage: number
+const updateglobalRating = async ( restaurantId: string, newAverage: number
 ): Promise<IRestaurant | null> => {
     const clamped = Math.min(10, Math.max(0, newAverage));
-    return RestaurantModel.findByIdAndUpdate( restaurantId, { 'profile.rating': clamped },
+    return RestaurantModel.findByIdAndUpdate( restaurantId, { 'profile.globalRating': clamped },
             { new: true, runValidators: true } ).lean();
 };
 
@@ -119,7 +144,7 @@ export interface RestaurantFilterParams {
     lat?: number;
     radiusMeters?: number;
     categories?: string[];
-    minRating?: number;
+    minglobalRating?: number;
     city?: string;
     openNow?: boolean;
     openAt?: string;
@@ -182,7 +207,7 @@ function buildOpenAtStages(date: Date): PipelineStage[] {
 const getFilteredRestaurants = async (
     params: RestaurantFilterParams
 ): Promise<RestaurantWithDistance[]> => {
-    const { lng, lat, radiusMeters = 5_000, categories, minRating, city, openNow, openAt } = params;
+    const { lng, lat, radiusMeters = 5_000, categories, minglobalRating, city, openNow, openAt } = params;
 
     const hasGeo = lng !== undefined && lat !== undefined && isFinite(lng) && isFinite(lat);
     const pipeline: PipelineStage[] = [];
@@ -190,7 +215,7 @@ const getFilteredRestaurants = async (
 
     if (hasGeo) {
         if (city)               baseFilter['profile.location.city'] = { $regex: city, $options: 'i' };
-        if (minRating)          baseFilter['profile.rating']        = { $gte: minRating };
+        if (minglobalRating)          baseFilter['profile.globalRating']        = { $gte: minglobalRating };
         if (categories?.length) baseFilter['profile.category']      = { $in: categories };
 
         pipeline.push({
@@ -205,7 +230,7 @@ const getFilteredRestaurants = async (
     }
     else {
         if (city)               baseFilter['profile.location.city'] = { $regex: city, $options: 'i' };
-        if (minRating)          baseFilter['profile.rating']        = { $gte: minRating };
+        if (minglobalRating)          baseFilter['profile.globalRating']        = { $gte: minglobalRating };
         if (categories?.length) baseFilter['profile.category']      = { $in: categories };
 
         pipeline.push({ $match: baseFilter });
@@ -217,7 +242,7 @@ const getFilteredRestaurants = async (
     }
 
     if (!hasGeo) {
-        pipeline.push({ $sort: { 'profile.rating': -1, 'profile.name': 1 } });
+        pipeline.push({ $sort: { 'profile.globalRating': -1, 'profile.name': 1 } });
     }
 
     return RestaurantModel.aggregate<RestaurantWithDistance>(pipeline).exec();
@@ -240,6 +265,6 @@ export default {
     getNearby,
     getBadges,
     getStatistics,
-    updateRating,
+    updateglobalRating,
     getFilteredRestaurants,
 };

@@ -1,9 +1,10 @@
 [
   {
+    "_id": "65f1c2a1b2c3d4e5f678d001",
     "customer_id": "65f1c2a1b2c3d4e5f6789051",
     "restaurant_id": "65f1c2a1b2c3d4e5f6789001",
     "date": "2024-06-14T21:30:00.000Z",
-    "rating": 9,
+    "globalRating": 9,
     "ratings": {
       "foodQuality": 9,
       "staffService": 8,
@@ -14,10 +15,41 @@
     "likes": 14
   },
   {
+    "_id": "65f1c2a1b2c3d4e5f678d002",
+    "customer_id": "65f1c2a1b2c3d4e5f6789052",
+    "restaurant_id": "65f1c2a1b2c3d4e5f6789001",
+    "date": "2024-05-10T15:00:00.000Z",
+    "globalRating": 8,
+    "ratings": {
+      "foodQuality": 8,
+      "staffService": 9,
+      "cleanliness": 9,
+      "environment": 8
+    },
+    "comment": "Great wine selection and the sashimi was very fresh. A bit pricey but worth the occasion.",
+    "likes": 6
+  },
+  {
+    "_id": "65f1c2a1b2c3d4e5f678d003",
     "customer_id": "65f1c2a1b2c3d4e5f6789051",
+    "restaurant_id": "65f1c2a1b2c3d4e5f6789002",
+    "date": "2024-04-10T13:00:00.000Z",
+    "globalRating": 9,
+    "ratings": {
+      "foodQuality": 10,
+      "staffService": 10,
+      "cleanliness": 9,
+      "environment": 8
+    },
+    "comment": "Best tonkotsu ramen I've had outside of Japan. The egg was perfectly marinated.",
+    "likes": 27
+  },
+  {
+    "_id": "65f1c2a1b2c3d4e5f678d004",
+    "customer_id": "65f1c2a1b2c3d4e5f6789052",
     "restaurant_id": "65f1c2a1b2c3d4e5f6789003",
-    "date": "2024-05-20T20:00:00.000Z",
-    "rating": 7,
+    "date": "2024-05-25T21:00:00.000Z",
+    "globalRating": 7,
     "ratings": {
       "foodQuality": 7,
       "staffService": 6,
@@ -27,17 +59,33 @@
     "likes": 3
   },
   {
+    "_id": "65f1c2a1b2c3d4e5f678d005",
+    "customer_id": "65f1c2a1b2c3d4e5f6789051",
+    "restaurant_id": "65f1c2a1b2c3d4e5f6789004",
+    "date": "2024-06-03T11:00:00.000Z",
+    "globalRating": 8,
+    "ratings": {
+      "foodQuality": 9,
+      "staffService": 8,
+      "cleanliness": 9,
+      "environment": 7
+    },
+    "comment": "The buddha bowl was incredibly fresh and filling. Love that everything is locally sourced. The açaí bowl is also a must!",
+    "likes": 11
+  },
+  {
+    "_id": "65f1c2a1b2c3d4e5f678d006",
     "customer_id": "65f1c2a1b2c3d4e5f6789052",
-    "restaurant_id": "65f1c2a1b2c3d4e5f6789002",
-    "date": "2024-04-10T13:00:00.000Z",
-    "rating": 9,
+    "restaurant_id": "65f1c2a1b2c3d4e5f6789005",
+    "date": "2024-05-17T22:00:00.000Z",
+    "globalRating": 10,
     "ratings": {
       "foodQuality": 10,
       "staffService": 10,
-      "cleanliness": 9,
-      "environment": 8
+      "cleanliness": 10,
+      "environment": 10
     },
-    "comment": "Best tonkotsu ramen I've had outside of Japan. The egg was perfectly marinated.",
-    "likes": 27
+    "comment": "Absolutely perfect. The wood-fired Margherita is a religious experience. Burrata starter was divine. This place deserves a Michelin star.",
+    "likes": 41
   }
 ]

@@ -193,14 +193,14 @@ const getStatistics = async (req: Request, res: Response, next: NextFunction) =>
 
 const getFiltered = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { lng, lat, radiusMeters, categories, minRating, city, openNow, openAt } = req.query;
+        const { lng, lat, radiusMeters, categories, minglobalRating, city, openNow, openAt } = req.query;
 
         const results = await RestaurantService.getFilteredRestaurants({
             lng:          lng          ? parseFloat(lng          as string) : undefined,
             lat:          lat          ? parseFloat(lat          as string) : undefined,
             radiusMeters: radiusMeters ? parseFloat(radiusMeters as string) : undefined,
             categories:   categories   ? (categories as string).split(',')  : undefined,
-            minRating:    minRating    ? parseFloat(minRating    as string) : undefined,
+            minglobalRating:    minglobalRating    ? parseFloat(minglobalRating    as string) : undefined,
             city:         city         ? (city as string)                   : undefined,
             openNow:      openNow === 'true',
             openAt:       openAt       ? (openAt as string)                 : undefined,

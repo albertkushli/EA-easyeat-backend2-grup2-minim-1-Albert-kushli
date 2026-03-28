@@ -12,7 +12,7 @@ const router = express.Router();
  *
  * components:
  *   schemas:
- *     Ratings:
+ *     ratings:
  *       type: object
  *       properties:
  *         foodQuality:
@@ -42,11 +42,11 @@ const router = express.Router();
  *         date:
  *           type: string
  *           format: date
- *         rating:
+ *         globalRating:
  *           type: number
  *           example: 9
  *         ratings:
- *           $ref: '#/components/schemas/Ratings'
+ *           $ref: '#/components/schemas/ratings'
  *         comment:
  *           type: string
  *           example: "Amazing food!"
@@ -59,7 +59,7 @@ const router = express.Router();
  *       required:
  *         - customer_id
  *         - restaurant_id
- *         - rating
+ *         - globalRating
  *       properties:
  *         customer_id:
  *           type: string
@@ -68,12 +68,12 @@ const router = express.Router();
  *         date:
  *           type: string
  *           format: date
- *         rating:
+ *         globalRating:
  *           type: number
  *           minimum: 1
  *           maximum: 10
  *         ratings:
- *           $ref: '#/components/schemas/Ratings'
+ *           $ref: '#/components/schemas/ratings'
  *         comment:
  *           type: string
  *         likes:
@@ -152,7 +152,7 @@ router.get('/restaurant/:restaurantId', controller.readByRestaurant);
  *         schema:
  *           type: integer
  *       - in: query
- *         name: minRating
+ *         name: minglobalRating
  *         schema:
  *           type: number
  *       - in: query

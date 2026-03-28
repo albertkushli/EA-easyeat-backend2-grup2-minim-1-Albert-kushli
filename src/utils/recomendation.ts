@@ -36,7 +36,7 @@ export async function getRecommendedDishes(preferences: CustomerPreferences): Pr
 
     // 3. Find dishes that match the customer taste AND are served right now
     const dishes = await DishModel.find(query)
-        .populate('restaurant_id', 'profile.name profile.location profile.rating');
+        .populate('restaurant_id', 'profile.name profile.location profile.globalRating');
 
     return dishes;
 }

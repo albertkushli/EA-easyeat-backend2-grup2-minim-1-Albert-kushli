@@ -1,5 +1,6 @@
 [
   {
+    "_id": "65f1c2a1b2c3d4e5f678e001",
     "restaurant_id": "65f1c2a1b2c3d4e5f6789001",
     "totalPointsGiven": 24750,
     "loyalCustomers": 138,
@@ -12,14 +13,51 @@
     "updatedAt": "2024-06-15T00:00:00.000Z"
   },
   {
+    "_id": "65f1c2a1b2c3d4e5f678e002",
     "restaurant_id": "65f1c2a1b2c3d4e5f6789002",
     "totalPointsGiven": 8900,
     "loyalCustomers": 52,
     "mostRequestedRewards": [
-      "65f1c2a1b2c3d4e5f6789024"
+      "65f1c2a1b2c3d4e5f6789023"
     ],
     "averagePointsPerVisit": 60,
     "createdAt": "2023-11-15T10:00:00.000Z",
     "updatedAt": "2024-06-15T00:00:00.000Z"
+  },
+  {
+    "_id": "65f1c2a1b2c3d4e5f678e003",
+    "restaurant_id": "65f1c2a1b2c3d4e5f6789003",
+    "totalPointsGiven": 5320,
+    "loyalCustomers": 29,
+    "mostRequestedRewards": [
+      "65f1c2a1b2c3d4e5f678f002"
+    ],
+    "averagePointsPerVisit": 72,
+    "createdAt": "2024-01-10T11:00:00.000Z",
+    "updatedAt": "2024-06-01T09:30:00.000Z"
+  },
+  {
+    "_id": "65f1c2a1b2c3d4e5f6789044",
+    "restaurant_id": "65f1c2a1b2c3d4e5f6789004",
+    "totalPointsGiven": 3100,
+    "loyalCustomers": 18,
+    "mostRequestedRewards": [
+      "65f1c2a1b2c3d4e5f678f004"
+    ],
+    "averagePointsPerVisit": 45,
+    "createdAt": "2024-02-14T08:30:00.000Z",
+    "updatedAt": "2024-05-20T12:00:00.000Z"
+  },
+  {
+    "_id": "65f1c2a1b2c3d4e5f678e005",
+    "restaurant_id": "65f1c2a1b2c3d4e5f6789005",
+    "totalPointsGiven": 11400,
+    "loyalCustomers": 64,
+    "mostRequestedRewards": [
+      "65f1c2a1b2c3d4e5f678f001"
+    ],
+    "averagePointsPerVisit": 98,
+    "createdAt": "2023-09-05T17:00:00.000Z",
+    "updatedAt": "2024-06-10T11:45:00.000Z"
   }
 ]

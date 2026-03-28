@@ -8,7 +8,7 @@ export interface IReview {
   restaurant_id: Types.ObjectId;
 
   date: Date;
-  rating: number;
+  globalRating: number;
 
   ratings?: {
     foodQuality?: number;
@@ -33,7 +33,7 @@ const reviewSchema = new Schema<IReview>(
     customer_id: { type: Schema.Types.ObjectId, ref: 'Customer', required: true },
     restaurant_id: { type: Schema.Types.ObjectId, ref: 'Restaurant', required: true },
     date: { type: Date, required: true, default: Date.now },
-    rating: { type: Number, required: true, min: 1, max: 10 },
+    globalRating: { type: Number, required: true, min: 0, max: 10 },
     ratings: {
       foodQuality: { type: Number, min: 0, max: 10 },
       staffService: { type: Number, min: 0, max: 10 },
@@ -58,7 +58,7 @@ reviewSchema.index( { customer_id: 1, restaurant_id: 1 },
 // Para búsquedas rápidas (paginación/filtros)
 reviewSchema.index({ customer_id: 1, deleted: 1 });
 reviewSchema.index({ restaurant_id: 1, deleted: 1 });
-reviewSchema.index({ rating: -1 });
+reviewSchema.index({ globalRating: -1 });
 reviewSchema.index({ likes: -1 });
 
 
