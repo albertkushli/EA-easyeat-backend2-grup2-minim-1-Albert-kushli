@@ -26,6 +26,18 @@ const readCustomer = async (req: Request, res: Response, next: NextFunction) => 
     }
 };
 
+const readCustomerFull = async (req: Request, res: Response, next: NextFunction) => {
+    const { customerId } = req.params;
+    try {
+        const customer = await CustomerService.getCustomerFull(customerId);
+        return customer
+            ? res.status(200).json(customer)
+            : res.status(404).json({ message: 'Customer not found' });
+    } catch (error) {
+        return res.status(500).json({ error });
+    }
+};
+
 // ─── Read (paginated list) ────────────────────────────────────────────────────
 
 const readAll = async (req: Request, res: Response, next: NextFunction) => {
@@ -112,6 +124,7 @@ const hardDeleteCustomer = async (req: Request, res: Response, next: NextFunctio
 export default {
     createCustomer,
     readCustomer,
+    readCustomerFull,
     readAll,
     updateCustomer,
     softDeleteCustomer,

@@ -110,6 +110,8 @@ const router = express.Router();
  *         description: Created
  *       422:
  *         description: Validation error
+ *       500:
+ *         description: Server error
  */
 router.post('/', ValidateJoi(Schemas.customer.create), controller.createCustomer);
 
@@ -161,6 +163,30 @@ router.get('/', controller.readAll);
  *         description: Not found or soft-deleted
  */
 router.get('/:customerId', controller.readCustomer);
+
+/**
+ * @openapi
+ * /customers/{customerId}/full:
+ *   get:
+ *     summary: Gets a customer with all populated relations
+ *     tags: [Customer]
+ *     parameters:
+ *       - in: path
+ *         name: customerId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Customer with all relations populated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Customer'
+ *       404:
+ *         description: Customer not found
+ */
+router.get('/:customerId/full', controller.readCustomerFull);
 
 // ─── PUT /customers/:customerId ───────────────────────────────────────────────
 /**

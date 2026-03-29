@@ -32,6 +32,43 @@ const getCustomer = async (customerId: string, includeDeleted = false) => {
     return includeDeleted ? query : query.active();
 };
 
+// src/services/customer.ts (or wherever your service layer is)
+
+const getCustomerFull = async (customerId: string, includeDeleted = false) => {
+    const query = CustomerModel.findById(customerId)
+        .populate('pointsWallet')
+        .populate('visitHistory')
+        .populate({
+            path: 'favoriteRestaurants',
+            select: 'profile.name profile.description profile.globalRating profile.category profile.image profile.location.city',
+            transform: (doc) => {
+                if (doc && doc.profile && doc.profile.image && Array.isArray(doc.profile.image)) {
+                    doc.profile.image = doc.profile.image.slice(0, 3);
+                }
+                return doc;
+            }
+        })
+        .populate('badges')
+        .populate('reviews');
+
+    return includeDeleted ? query : query.active();
+};
+
+const getCustomerAllPointsWallet = async (customerId: string ) => {
+};
+
+const getCustomerAllVisits = async (customerId: string ) => {
+};
+
+const getCustomerAllFavouriteRestaurants = async (customerId: string ) => {
+};
+
+const getCustomerAllBadges = async (customerId: string) => {
+};
+
+const getCustomerAllReviews = async (customerId: string ) => {
+};
+
 // ─── Read (paginated list — active only) ──────────────────────────────────────
 
 const getAllCustomers = async ( { page = 1, limit = 20 }: PaginationOptions = {} ): Promise<PaginatedResult<ICustomer>> => {
@@ -71,6 +108,7 @@ const hardDeleteCustomer = async (customerId: string) => {
 export default {
     createCustomer,
     getCustomer,
+    getCustomerFull,
     getAllCustomers,
     updateCustomer,
     softDeleteCustomer,
