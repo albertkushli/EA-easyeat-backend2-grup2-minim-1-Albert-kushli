@@ -21,11 +21,13 @@ const router = express.Router();
  *             properties:
  *               email:
  *                 type: string
+ *                 example: admin@easyeat.com
  *               password:
  *                 type: string
+ *                 example: Admin123
  *     responses:
  *       200:
- *         description: Auth successful
+ *         description: Auth successful — returns accessToken in body, refreshToken as httpOnly cookie
  *       401:
  *         description: Invalid credentials
  */
@@ -63,5 +65,31 @@ router.post('/login', controller.loginAdmin);
  *         description: Admin with this email already exists
  */
 router.post('/register', controller.registerAdmin);
+
+/**
+ * @openapi
+ * /auth/refresh:
+ *   post:
+ *     summary: Issue a new access token using the httpOnly refresh cookie
+ *     tags: [Auth]
+ *     responses:
+ *       200:
+ *         description: Returns a new accessToken
+ *       401:
+ *         description: Missing or invalid refresh token
+ */
+router.post('/refresh', controller.refresh);
+
+/**
+ * @openapi
+ * /auth/logout:
+ *   post:
+ *     summary: Log out — clears the refresh token cookie
+ *     tags: [Auth]
+ *     responses:
+ *       200:
+ *         description: Logged out successfully
+ */
+router.post('/logout', controller.logout);
 
 export default router;

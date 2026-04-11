@@ -93,7 +93,7 @@ export async function getCurrentMenu(restaurantId: string, now: Date = new Date(
     });
 }
 
-// MODE 3 — User manually picks a period to browse
+// MODE 3 — admin manually picks a period to browse
 export async function getMenuByPeriod(restaurantId: string, period: ServicePeriod) {
     return DishModel.find({
         restaurant_id: restaurantId,

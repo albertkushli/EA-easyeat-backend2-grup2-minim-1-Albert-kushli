@@ -243,13 +243,13 @@ router.get('/', controller.readAll);
  *         name: lng
  *         schema:
  *           type: number
- *         description: User longitude (required if lat is provided)
+ *         description: admin longitude (required if lat is provided)
  *         example: 2.1734
  *       - in: query
  *         name: lat
  *         schema:
  *           type: number
- *         description: User latitude (required if lng is provided)
+ *         description: admin latitude (required if lng is provided)
  *         example: 41.3851
  *       - in: query
  *         name: radiusMeters

@@ -13,7 +13,6 @@ import { IVisit } from '../models/visit';
 import { IDish } from '../models/dish';
 
 import Logging from '../library/logging';
-import dish from '../controllers/dish';
 
 export const ValidateJoi = (schema: ObjectSchema) => {
     return async (req: Request, res: Response, next: NextFunction) => {
@@ -57,12 +56,7 @@ const categoryEnum = [
 
 const objectId = Joi.string().length(24).hex();
 
-// ✅ Doc 15: validaciones de mayúscula y número (más seguro)
-const passwordSchema = Joi.string()
-    .min(8)
-    .max(128)
-    .pattern(/[A-Z]/, 'uppercase letter')
-    .pattern(/[0-9]/, 'number')
+const passwordSchema = Joi.string().min(8).max(128).pattern(/[A-Z]/, 'uppercase letter').pattern(/[0-9]/, 'number')
     .messages({
         'string.pattern.name': 'Password must contain at least one {{#name}}',
         'string.min':          'Password must be at least 8 characters long',
@@ -87,9 +81,9 @@ export const Schemas = {
 
     customer: {
         create: Joi.object<ICustomer>({
-            name:                Joi.string().min(2).max(100).required(), // ✅ doc 15: min/max
+            name:                Joi.string().min(2).max(100).required(),
             email:               Joi.string().email().required(),
-            password:            passwordSchema.required(),               // ✅ doc 15: required
+            password:            passwordSchema.required(),         
             isActive:            Joi.boolean().default(true),
             profilePictures:     Joi.array().items(Joi.string().uri()),
             pointsWallet:        Joi.array().items(objectId),
@@ -99,9 +93,9 @@ export const Schemas = {
             reviews:             Joi.array().items(objectId),
         }),
         update: Joi.object<ICustomer>({
-            name:                Joi.string().min(2).max(100),            // ✅ doc 15: min/max
+            name:                Joi.string().min(2).max(100),           
             email:               Joi.string().email(),
-            password:            passwordSchema,                          // opcional en update
+            password:            passwordSchema,
             isActive:            Joi.boolean(),
             profilePictures:     Joi.array().items(Joi.string().uri()),
             pointsWallet:        Joi.array().items(objectId),
@@ -171,7 +165,7 @@ export const Schemas = {
         create: Joi.object<IReview>({
             customer_id:   objectId.required(),
             restaurant_id: objectId.required(),
-            date:          Joi.date().default(() => new Date()), // ✅ doc 15: opcional con default
+            date:          Joi.date().default(() => new Date()),
             globalRating:        Joi.number().min(1).max(10).required(),
             ratings: Joi.object({
                 foodQuality:  Joi.number().min(0).max(10),
@@ -239,13 +233,13 @@ export const Schemas = {
             date:          Joi.date().default(() => new Date()),
             pointsEarned:  Joi.number().min(0).default(0),
             billAmount:    Joi.number().min(0).default(0),
-            deletedAt:     Joi.any().strip(), // ✅ ignorado en create, nunca se puede enviar
+            deletedAt:     Joi.any().strip(),
         }),
         update: Joi.object<IVisit & { deletedAt?: any }>({
             date:         Joi.date(),
             pointsEarned: Joi.number().min(0),
             billAmount:   Joi.number().min(0),
-            deletedAt:    Joi.date().allow(null).optional(), // ✅ doc 16: necesario para soft delete
+            deletedAt:    Joi.date().allow(null).optional(),
         }),
     },
 

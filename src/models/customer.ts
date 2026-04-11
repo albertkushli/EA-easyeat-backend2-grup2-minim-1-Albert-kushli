@@ -62,9 +62,6 @@ const customerSchema = new Schema<
         },
 
         email: { type: String,  required: [true, 'Email is required'],
-            // Uniqueness is enforced via a partial index below (email + deletedAt: null).
-            // The standard unique:true index is intentionally omitted so that a
-            // soft-deleted address can be re-registered.
             lowercase: true,
             trim:      true,
             match: [/.+@.+\..+/, 'Please provide a valid email address'],
