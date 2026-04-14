@@ -1,0 +1,44 @@
+[
+  {
+    "_id": "65f1c2a1b2c3d4e5f678e010",
+    "restaurant_id": "65f1c2a1b2c3d4e5f6789001",
+    "items": [
+      {
+        "_id": "65f1c2a1b2c3d4e5f678f001",
+        "url": "https://www.youtube.com/watch?v=mediterranean-cooking",
+        "type": "video",
+        "description": "Tutorial sobre cocina mediterránea"
+      },
+      {
+        "_id": "65f1c2a1b2c3d4e5f678f002",
+        "url": "https://labodegadelmar.com/manual-seguridad.pdf",
+        "type": "manual",
+        "description": "Manual de seguridad alimentaria 2024"
+      }
+    ]
+  },
+  {
+    "_id": "65f1c2a1b2c3d4e5f678e011",
+    "restaurant_id": "65f1c2a1b2c3d4e5f6789002",
+    "items": [
+      {
+        "_id": "65f1c2a1b2c3d4e5f678f003",
+        "url": "https://elpais.com/gastronomia/2023-11-20/el-secreto-del-mejor-ramen.html",
+        "type": "noticia",
+        "description": "Artículo sobre el éxito del ramen de la casa"
+      }
+    ]
+  },
+  {
+    "_id": "65f1c2a1b2c3d4e5f678e012",
+    "restaurant_id": "65f1c2a1b2c3d4e5f6789003",
+    "items": [
+      {
+        "_id": "65f1c2a1b2c3d4e5f678f004",
+        "url": "https://vimeo.com/taco-prep-guide",
+        "type": "video",
+        "description": "Guía de preparación de tacos al pastor"
+      }
+    ]
+  }
+]

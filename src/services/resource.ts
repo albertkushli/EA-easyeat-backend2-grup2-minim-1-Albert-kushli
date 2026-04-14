@@ -86,6 +86,22 @@ const removeItem = async (resourceId: string, itemId: string) => {
     );
 };
 
+// ─── Update one item in vector ───────────────────────────────────────────────
+
+const updateItem = async (resourceId: string, itemId: string, item: Partial<IResourceItem>) => {
+    return await ResourceModel.findOneAndUpdate(
+        { _id: resourceId, 'items._id': new mongoose.Types.ObjectId(itemId) },
+        {
+            $set: {
+                'items.$.url': item.url,
+                'items.$.type': item.type,
+                'items.$.description': item.description,
+            },
+        },
+        { new: true, runValidators: true }
+    );
+};
+
 // ─── Delete whole resource document ──────────────────────────────────────────
 
 const deleteResource = async (resourceId: string) => {
@@ -109,6 +125,7 @@ export default {
     getAllResources,
     updateResource,
     addItem,
+    updateItem,
     removeItem,
     deleteResource,
 };

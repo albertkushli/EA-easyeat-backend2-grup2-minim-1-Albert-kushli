@@ -97,6 +97,20 @@ const removeItem = async (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
+// ─── Update one item in vector ───────────────────────────────────────────────
+
+const updateItem = async (req: Request, res: Response, next: NextFunction) => {
+    const { resourceId, itemId } = req.params;
+    try {
+        const updated = await ResourceService.updateItem(resourceId, itemId, req.body);
+        return updated
+            ? res.status(200).json(updated)
+            : res.status(404).json({ message: 'not found' });
+    } catch (error) {
+        return res.status(500).json({ error });
+    }
+};
+
 // ─── Delete document ──────────────────────────────────────────────────────────
 
 const deleteResource = async (req: Request, res: Response, next: NextFunction) => {
@@ -120,6 +134,7 @@ export default {
     readAll,
     updateResource,
     addItem,
+    updateItem,
     removeItem,
     deleteResource,
 };

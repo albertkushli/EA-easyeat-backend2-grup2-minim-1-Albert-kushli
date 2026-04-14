@@ -18,3 +18,9 @@
 **Prompt:** "necesito que el listado incluya paginacion... y despues necesito añadir un buscador en el backend como por ejemplo a traves de el tipo de recurso o descripcion"
 **Incoherencias:** Ninguna relevante, aunque se tuvo que asegurar que la búsqueda fuera insensible a mayúsculas/minúsculas usando regex.
 **Solución:** Se actualizaron `ResourceService` y `ResourceController` para aceptar parámetros `page`, `limit`, `type` y `search`. Se actualizó la documentación de Swagger para reflejar los nuevos campos.
+---
+## Consulta 4: Implementación de método UPDATE para ítems de recursos
+**Pregunta:** Añadir funcionalidad para editar un recurso existente.
+**Prompt:** "el resources esta perfecto pero solo utilizamos 2 metodos de la api post y eliminar me faltaria uno mas como por ejemplo update"
+**Incoherencias:** Ninguna. Se diseñó una ruta PATCH específica para actualizar un ítem por su ID dentro de la colección del restaurante.
+**Solución:** Se implementó `updateItem` en el backend (usando el operador posicional `$` de MongoDB) y se añadió la lógica de edición "inline" en el Backoffice (Angular) con un nuevo formulario reactivo y estados de edición por restaurante.
