@@ -11,6 +11,8 @@ import { IRewardRedemption } from '../models/rewardRedemption';
 import { IStatistics } from '../models/statistics';
 import { IVisit } from '../models/visit';
 import { IDish } from '../models/dish';
+import { IResource } from '../models/resource';
+
 
 import Logging from '../library/logging';
 
@@ -271,7 +273,9 @@ export const Schemas = {
             rewards:    Joi.array().items(objectId),
             statistics: objectId,
             badges:     Joi.array().items(objectId),
+            recursos:   objectId,
         }),
+
 
         update: Joi.object<IRestaurant>({
             profile: Joi.object({
@@ -300,8 +304,10 @@ export const Schemas = {
             rewards:    Joi.array().items(objectId),
             statistics: objectId,
             badges:     Joi.array().items(objectId),
+            recursos:   objectId,
         }),
     },
+
 
     dish: {
         create: Joi.object<IDish>({
@@ -336,6 +342,39 @@ export const Schemas = {
             portionSize:   Joi.string().valid('small', 'medium', 'large', 'sharing')
         })
     },
+
+    resource: {
+        create: Joi.object<IResource>({
+            restaurant_id: objectId.required(),
+            items: Joi.array().items(
+                Joi.object({
+                    _id: objectId.optional(),
+                    url: Joi.string().uri().required(),
+                    type: Joi.string().valid('manual', 'video', 'noticia').required(),
+                    description: Joi.string().max(500).required()
+                }).unknown(true)
+            )
+        }),
+        update: Joi.object<IResource>({
+            items: Joi.array().items(
+                Joi.object({
+                    _id: objectId.optional(),
+                    url: Joi.string().uri().required(),
+                    type: Joi.string().valid('manual', 'video', 'noticia').required(),
+                    description: Joi.string().max(500).required()
+                }).unknown(true)
+            )
+        }),
+        item: Joi.object({
+            _id: objectId.optional(),
+            url: Joi.string().uri().required(),
+            type: Joi.string().valid('manual', 'video', 'noticia').required(),
+            description: Joi.string().max(500).required()
+        }).unknown(true)
+    }
+
+
+,
 
     
 }

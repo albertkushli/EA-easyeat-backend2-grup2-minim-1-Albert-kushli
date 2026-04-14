@@ -75,8 +75,10 @@ export interface IRestaurant {
     badges?:    Types.ObjectId[];
     visits?:    Types.ObjectId[];
     reviews?:   Types.ObjectId[];
+    recursos?:  Types.ObjectId;
     deletedAt?: Date | null;
 }
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Query-helper interface  (enables Model.find().active())
@@ -205,7 +207,9 @@ const restaurantSchema = new Schema<IRestaurant, RestaurantModelType, {}, Restau
         badges:     [{ type: Schema.Types.ObjectId, ref: 'Badge'    }],
         visits:     [{ type: Schema.Types.ObjectId, ref: 'Visit'    }],
         reviews:    [{ type: Schema.Types.ObjectId, ref: 'Review'   }],
+        recursos:   { type: Schema.Types.ObjectId,  ref: 'Resource' },
         deletedAt:  { type: Date, default: null },
+
     },
     {
         timestamps: true,     // adds createdAt / updatedAt

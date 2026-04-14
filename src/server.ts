@@ -18,6 +18,8 @@ import employeeRoutes from './routes/employee';
 import pointsWallets from './routes/pointsWallet';
 import rewardRedemption from './routes/rewardRedemption';
 import statistics from './routes/statistics';
+import resourceRoutes from './routes/resource';
+
 
 import authRoutes from './routes/auth';
 // requireAdmin is now an array [authenticate, requireRole('admin')]
@@ -70,6 +72,8 @@ const StartServer = () => {
     router.use('/pointsWallets',    requireAdmin, pointsWallets);
     router.use('/rewardRedemptions',requireAdmin, rewardRedemption);
     router.use('/statistics',       requireAdmin, statistics);
+    router.use('/recursos',         requireAdmin, resourceRoutes);
+
 
     /** 404 fallback */
     router.use((req, res) => {
